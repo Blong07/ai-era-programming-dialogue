@@ -33,6 +33,14 @@ const ProgrammingSurvey = () => {
     }
   };
 
+  const handleSubmit = () => {
+    if (!selectedOption || !opinion.trim()) {
+      alert('Please select an option and provide your opinion before submitting.');
+      return;
+    }
+    console.log('Submitted:', { opinion, selectedOption });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-6">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -52,10 +60,27 @@ const ProgrammingSurvey = () => {
             </label>
             <Textarea
               value={opinion}
-              onChange={(e) => setOpinion(e.target.value)}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                if (newValue.length <= 200) {
+                  setOpinion(newValue);
+                }
+              }}
               className="min-h-[100px]"
               placeholder="Type your thoughts here..."
+              maxLength={200}
             />
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-sm text-gray-500">
+                {opinion.length}/200 characters
+              </span>
+              <Button 
+                onClick={handleSubmit}
+                className="bg-primary hover:bg-primary/90"
+              >
+                Submit
+              </Button>
+            </div>
           </div>
         </Card>
 
